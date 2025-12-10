@@ -1,25 +1,31 @@
 import type { Language, Now } from "@/constants";
 
+type Renderer = (now: Now) => string;
+
+const renderers: Record<Language, Renderer> = {
+  TypeScript: renderTypeScript,
+  Python: renderPython,
+  Java: renderJava,
+  "C#": renderCSharp,
+  "C++": renderCpp,
+  Go: renderGo,
+} as const satisfies Record<Language, Renderer>;
+
 export function renderNow(lang: Language, now: Now): string {
-  switch (lang) {
-    case "TypeScript":
-      return renderTypeScript(now);
-    case "Python":
-      return renderPython(now);
-    case "Java":
-      return renderJava(now);
-    case "C#":
-      return renderCSharp(now);
-    case "C++":
-      return renderCpp(now);
-    case "Go":
-      return renderGo(now);
-    default:
-      return assertNever(lang);
-  }
+  return renderers[lang](now);
 }
 
-function renderTypeScript(now: Now) {
+function n(x: number): string {
+  if (!Number.isFinite(x)) throw new Error(`Invalid number: ${x}`);
+  return String(x);
+}
+
+function dq(s: string): string {
+  // safe double-quoted string literal
+  return JSON.stringify(s);
+}
+
+function renderTypeScript(now: Now): string {
   return `const now = {
   year: ${n(now.year)},
   month: { num: ${n(now.month.num)}, name: ${dq(now.month.name)} },
@@ -31,7 +37,7 @@ function renderTypeScript(now: Now) {
 } as const;`;
 }
 
-function renderPython(now: Now) {
+function renderPython(now: Now): string {
   return `now = {
   "year": ${n(now.year)},
   "month": {"num": ${n(now.month.num)}, "name": ${dq(now.month.name)}},
@@ -43,7 +49,7 @@ function renderPython(now: Now) {
 }`;
 }
 
-function renderJava(now: Now) {
+function renderJava(now: Now): string {
   return `import java.util.Map;
 
 var now = Map.of(
@@ -57,7 +63,7 @@ var now = Map.of(
 );`;
 }
 
-function renderCSharp(now: Now) {
+function renderCSharp(now: Now): string {
   return `var now = new
 {
     year = ${n(now.year)},
@@ -70,7 +76,7 @@ function renderCSharp(now: Now) {
 };`;
 }
 
-function renderCpp(now: Now) {
+function renderCpp(now: Now): string {
   return `#include <nlohmann/json.hpp>
 using nlohmann::json;
 
@@ -85,7 +91,7 @@ json now = {
 };`;
 }
 
-function renderGo(now: Now) {
+function renderGo(now: Now): string {
   return `now := map[string]any{
   "year": ${n(now.year)},
   "month": map[string]any{"num": ${n(now.month.num)}, "name": ${dq(now.month.name)}},
@@ -95,19 +101,4 @@ function renderGo(now: Now) {
   "minute": ${n(now.minute)},
   "second": ${n(now.second)},
 }`;
-}
-
-/** Double-quoted string literal with safe escaping (works fine for TS/Java/C#/Go/C++/Python). */
-function dq(s: string): string {
-  return JSON.stringify(s);
-}
-
-/** Ensures we only output finite numbers (helps catch bugs early). */
-function n(x: number): string {
-  if (!Number.isFinite(x)) throw new Error(`Invalid number: ${x}`);
-  return String(x);
-}
-
-function assertNever(x: never): never {
-  throw new Error(`Unhandled language: ${x}`);
 }
