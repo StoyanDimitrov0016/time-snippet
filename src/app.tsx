@@ -4,6 +4,7 @@ import LanguageSelector from "./components/custom/language-selector";
 import CodeBlock from "./components/custom/code-block";
 import { renderNow } from "./lib/render-utils";
 import { useLanguage } from "./hooks/useLanguage";
+import { Badge } from "@/components/ui/badge";
 
 export default function App() {
   const date = useSecondTimer();
@@ -16,9 +17,20 @@ export default function App() {
     <div className="min-h-screen bg-linear-to-br from-gray-50 via-blue-50 to-purple-50">
       <div className="mx-auto flex min-h-screen max-w-4xl flex-col px-6 py-10">
         <header className="text-center space-y-2 pt-6">
-          <h1 className="text-4xl font-bold bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            Time Snippet
-          </h1>
+          <div className="flex items-center justify-center gap-3">
+            <h1 className="text-4xl font-bold bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              Time Snippet
+            </h1>
+
+            <Badge variant="secondary" className="gap-2">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+              </span>
+              Live
+            </Badge>
+          </div>
+
           <p className="text-gray-600">
             Current time rendered in your favorite programming language
           </p>

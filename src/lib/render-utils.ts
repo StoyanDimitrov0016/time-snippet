@@ -28,9 +28,15 @@ function dq(s: string): string {
 function renderTypeScript(now: Now): string {
   return `const now = {
   year: ${n(now.year)},
-  month: { num: ${n(now.month.num)}, name: ${dq(now.month.name)} },
+  month: {
+    num: ${n(now.month.num)},
+    name: ${dq(now.month.name)},
+  },
   week: ${n(now.week)},
-  day: { num: ${n(now.day.num)}, name: ${dq(now.day.name)} },
+  day: {
+    num: ${n(now.day.num)},
+    name: ${dq(now.day.name)},
+  },
   hour: ${n(now.hour)},
   minute: ${n(now.minute)},
   second: ${n(now.second)},
@@ -40,9 +46,15 @@ function renderTypeScript(now: Now): string {
 function renderPython(now: Now): string {
   return `now = {
   "year": ${n(now.year)},
-  "month": {"num": ${n(now.month.num)}, "name": ${dq(now.month.name)}},
+  "month": {
+    "num": ${n(now.month.num)},
+    "name": ${dq(now.month.name)},
+  },
   "week": ${n(now.week)},
-  "day": {"num": ${n(now.day.num)}, "name": ${dq(now.day.name)}},
+  "day": {
+    "num": ${n(now.day.num)},
+    "name": ${dq(now.day.name)},
+  },
   "hour": ${n(now.hour)},
   "minute": ${n(now.minute)},
   "second": ${n(now.second)},
@@ -54,9 +66,15 @@ function renderJava(now: Now): string {
 
 var now = Map.of(
   "year", ${n(now.year)},
-  "month", Map.of("num", ${n(now.month.num)}, "name", ${dq(now.month.name)}),
+  "month", Map.of(
+    "num", ${n(now.month.num)},
+    "name", ${dq(now.month.name)}
+  ),
   "week", ${n(now.week)},
-  "day", Map.of("num", ${n(now.day.num)}, "name", ${dq(now.day.name)}),
+  "day", Map.of(
+    "num", ${n(now.day.num)},
+    "name", ${dq(now.day.name)}
+  ),
   "hour", ${n(now.hour)},
   "minute", ${n(now.minute)},
   "second", ${n(now.second)}
@@ -67,9 +85,17 @@ function renderCSharp(now: Now): string {
   return `var now = new
 {
     year = ${n(now.year)},
-    month = new { num = ${n(now.month.num)}, name = ${dq(now.month.name)} },
+    month = new
+    {
+        num = ${n(now.month.num)},
+        name = ${dq(now.month.name)},
+    },
     week = ${n(now.week)},
-    day = new { num = ${n(now.day.num)}, name = ${dq(now.day.name)} },
+    day = new
+    {
+        num = ${n(now.day.num)},
+        name = ${dq(now.day.name)},
+    },
     hour = ${n(now.hour)},
     minute = ${n(now.minute)},
     second = ${n(now.second)},
@@ -82,9 +108,15 @@ using nlohmann::json;
 
 json now = {
   {"year", ${n(now.year)}},
-  {"month", {{"num", ${n(now.month.num)}}, {"name", ${dq(now.month.name)}}}},
+  {"month", {
+    {"num", ${n(now.month.num)}},
+    {"name", ${dq(now.month.name)}}
+  }},
   {"week", ${n(now.week)}},
-  {"day", {{"num", ${n(now.day.num)}}, {"name", ${dq(now.day.name)}}}},
+  {"day", {
+    {"num", ${n(now.day.num)}},
+    {"name", ${dq(now.day.name)}}
+  }},
   {"hour", ${n(now.hour)}},
   {"minute", ${n(now.minute)}},
   {"second", ${n(now.second)}}
@@ -94,9 +126,15 @@ json now = {
 function renderGo(now: Now): string {
   return `now := map[string]any{
   "year": ${n(now.year)},
-  "month": map[string]any{"num": ${n(now.month.num)}, "name": ${dq(now.month.name)}},
+  "month": map[string]any{
+    "num": ${n(now.month.num)},
+    "name": ${dq(now.month.name)},
+  },
   "week": ${n(now.week)},
-  "day": map[string]any{"num": ${n(now.day.num)}, "name": ${dq(now.day.name)}},
+  "day": map[string]any{
+    "num": ${n(now.day.num)},
+    "name": ${dq(now.day.name)},
+  },
   "hour": ${n(now.hour)},
   "minute": ${n(now.minute)},
   "second": ${n(now.second)},
