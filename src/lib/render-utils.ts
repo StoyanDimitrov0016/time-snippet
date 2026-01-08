@@ -12,8 +12,32 @@ const renderers: Record<Language, Renderer> = {
 } as const satisfies Record<Language, Renderer>;
 
 export function renderNow(lang: Language, now: Now): string {
-  return renderers[lang](now);
+  const prelude = getPrelude(lang);
+  const body = renderers[lang](now);
+  return prelude ? `${prelude}\n\n${body}` : body;
 }
+
+function getPrelude(lang: Language): string {
+  switch (lang) {
+    case "TypeScript":
+      return `import type { Time } from "./types";`;
+    case "Python":
+      return `from models import Time`;
+    case "Java":
+      return ``;
+    case "C#":
+      return ``;
+    case "C++":
+      return `#include "time.hpp"`;
+    case "Go":
+      return `package main`;
+    default: {
+      return ``;
+    }
+  }
+}
+
+/* ----------------------- helpers ----------------------- */
 
 function n(x: number): string {
   if (!Number.isFinite(x)) throw new Error(`Invalid number: ${x}`);
@@ -21,12 +45,13 @@ function n(x: number): string {
 }
 
 function dq(s: string): string {
-  // safe double-quoted string literal
   return JSON.stringify(s);
 }
 
+/* ----------------------- renderers ----------------------- */
+
 function renderTypeScript(now: Now): string {
-  return `const now = {
+  return `const now: Time = {
   year: ${n(now.year)},
   month: {
     num: ${n(now.month.num)},
@@ -40,103 +65,77 @@ function renderTypeScript(now: Now): string {
   hour: ${n(now.hour)},
   minute: ${n(now.minute)},
   second: ${n(now.second)},
-} as const;`;
+};`;
 }
 
 function renderPython(now: Now): string {
-  return `now = {
-  "year": ${n(now.year)},
-  "month": {
-    "num": ${n(now.month.num)},
-    "name": ${dq(now.month.name)},
-  },
-  "week": ${n(now.week)},
-  "day": {
-    "num": ${n(now.day.num)},
-    "name": ${dq(now.day.name)},
-  },
-  "hour": ${n(now.hour)},
-  "minute": ${n(now.minute)},
-  "second": ${n(now.second)},
+  return `now: Time = {
+    "year": ${n(now.year)},
+    "month": {
+        "num": ${n(now.month.num)},
+        "name": ${dq(now.month.name)},
+    },
+    "week": ${n(now.week)},
+    "day": {
+        "num": ${n(now.day.num)},
+        "name": ${dq(now.day.name)},
+    },
+    "hour": ${n(now.hour)},
+    "minute": ${n(now.minute)},
+    "second": ${n(now.second)},
 }`;
 }
 
 function renderJava(now: Now): string {
-  return `import java.util.Map;
-
-var now = Map.of(
-  "year", ${n(now.year)},
-  "month", Map.of(
-    "num", ${n(now.month.num)},
-    "name", ${dq(now.month.name)}
-  ),
-  "week", ${n(now.week)},
-  "day", Map.of(
-    "num", ${n(now.day.num)},
-    "name", ${dq(now.day.name)}
-  ),
-  "hour", ${n(now.hour)},
-  "minute", ${n(now.minute)},
-  "second", ${n(now.second)}
+  return `var now = new Time(
+  ${n(now.year)},
+  new Time.Month(${n(now.month.num)}, ${dq(now.month.name)}),
+  ${n(now.week)},
+  new Time.Day(${n(now.day.num)}, ${dq(now.day.name)}),
+  ${n(now.hour)},
+  ${n(now.minute)},
+  ${n(now.second)}
 );`;
 }
 
 function renderCSharp(now: Now): string {
-  return `var now = new
-{
-    year = ${n(now.year)},
-    month = new
-    {
-        num = ${n(now.month.num)},
-        name = ${dq(now.month.name)},
-    },
-    week = ${n(now.week)},
-    day = new
-    {
-        num = ${n(now.day.num)},
-        name = ${dq(now.day.name)},
-    },
-    hour = ${n(now.hour)},
-    minute = ${n(now.minute)},
-    second = ${n(now.second)},
-};`;
+  return `var now = new Time(
+  ${n(now.year)},
+  new Month(${n(now.month.num)}, ${dq(now.month.name)}),
+  ${n(now.week)},
+  new Day(${n(now.day.num)}, ${dq(now.day.name)}),
+  ${n(now.hour)},
+  ${n(now.minute)},
+  ${n(now.second)}
+);`;
 }
 
 function renderCpp(now: Now): string {
-  return `#include <nlohmann/json.hpp>
-using nlohmann::json;
-
-json now = {
-  {"year", ${n(now.year)}},
-  {"month", {
-    {"num", ${n(now.month.num)}},
-    {"name", ${dq(now.month.name)}}
-  }},
-  {"week", ${n(now.week)}},
-  {"day", {
-    {"num", ${n(now.day.num)}},
-    {"name", ${dq(now.day.name)}}
-  }},
-  {"hour", ${n(now.hour)}},
-  {"minute", ${n(now.minute)}},
-  {"second", ${n(now.second)}}
+  return `Time now{
+  .year = ${n(now.year)},
+  .month = Month{ .num = ${n(now.month.num)}, .name = ${dq(now.month.name)} },
+  .week = ${n(now.week)},
+  .day = Day{ .num = ${n(now.day.num)}, .name = ${dq(now.day.name)} },
+  .hour = ${n(now.hour)},
+  .minute = ${n(now.minute)},
+  .second = ${n(now.second)},
 };`;
 }
 
 function renderGo(now: Now): string {
-  return `now := map[string]any{
-  "year": ${n(now.year)},
-  "month": map[string]any{
-    "num": ${n(now.month.num)},
-    "name": ${dq(now.month.name)},
+  return `var now = Time{
+  Year: ${n(now.year)},
+  Month: Month{
+    Num: ${n(now.month.num)},
+    Name: ${dq(now.month.name)},
   },
-  "week": ${n(now.week)},
-  "day": map[string]any{
-    "num": ${n(now.day.num)},
-    "name": ${dq(now.day.name)},
+  Week: ${n(now.week)},
+  Day: Day{
+    Num: ${n(now.day.num)},
+    Name: ${dq(now.day.name)},
   },
-  "hour": ${n(now.hour)},
-  "minute": ${n(now.minute)},
-  "second": ${n(now.second)},
+  Hour: ${n(now.hour)},
+  Minute: ${n(now.minute)},
+  Second: ${n(now.second)},
 }`;
 }
