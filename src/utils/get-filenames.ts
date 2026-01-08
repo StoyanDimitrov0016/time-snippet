@@ -20,7 +20,6 @@ export function getFileNames(lang: Language): FileNames {
     case "Go":
       return { snippet: "main.go", definition: "time.go" };
     default: {
-      const _exhaustive: never = lang;
       return { snippet: "time-snippet.ts", definition: "types.ts" };
     }
   }
