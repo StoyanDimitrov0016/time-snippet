@@ -1,4 +1,4 @@
-import type { Language } from "@/utils/get-project";
+import type { Language } from "@/utils/project.utils";
 
 const TYPESCRIPT_DEFINITION = `export type Month = {
   num: number;

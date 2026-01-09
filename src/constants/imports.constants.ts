@@ -1,4 +1,4 @@
-import type { Language } from "@/utils/get-project";
+import type { Language } from "@/utils/project.utils";
 
 export const IMPORTS: Record<Language, string> = {
   TypeScript: `import type { Time } from "./types";`,

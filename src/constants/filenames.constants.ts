@@ -1,4 +1,4 @@
-import type { Language, ProjectFilenames } from "@/utils/get-project";
+import type { Language, ProjectFilenames } from "@/utils/project.utils";
 
 const TYPESCRIPT_FILENAMES: ProjectFilenames = {
   snippet: "time-snippet.ts",
