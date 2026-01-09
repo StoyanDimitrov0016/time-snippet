@@ -1,5 +1,5 @@
 import type { Language, Time } from "@/utils/project.utils";
-import { IMPORTS } from "@/constants/imports.constant";
+import { IMPORTS } from "@/constants/imports.constants";
 
 export function getSnippetSource(time: Time, language: Language): string {
   const importSection = IMPORTS[language];
