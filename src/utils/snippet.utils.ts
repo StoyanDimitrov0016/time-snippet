@@ -4,7 +4,7 @@ import { IMPORTS } from "@/constants/imports.constants";
 export function getSnippetSource(time: Time, language: Language): string {
   const importSection = IMPORTS[language];
   const bodySection = makeSnippetBody(time, language);
-  return `${importSection}\n\n${bodySection}`;
+  return importSection ? `${importSection}\n\n${bodySection}` : bodySection;
 }
 
 function num(value: number): string {
@@ -27,7 +27,7 @@ function makeSnippetBody(time: Time, language: Language): string {
   hour: ${num(time.hour)},
   minute: ${num(time.minute)},
   second: ${num(time.second)},
-};`;
+} as const;`;
 
     case "Python":
       return `time: Time = {

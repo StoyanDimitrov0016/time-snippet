@@ -1,5 +1,6 @@
 import { DEFINITIONS } from "@/constants/definitions.constants";
 import { getSnippetSource } from "./snippet.utils";
+import { FILENAMES } from "@/constants/filenames.constants";
 
 export type Language = "TypeScript" | "Python" | "Java" | "C#" | "C++" | "Go";
 
@@ -28,14 +29,13 @@ export type ProjectFilenames = {
 export type ProjectSources = {
   definition: string;
   snippet: string;
+  filenames: ProjectFilenames;
 };
 
-export function getProjectSources(
-  time: Time,
-  language: Language
-): ProjectSources {
+export function getProject(time: Time, language: Language): ProjectSources {
   return {
     definition: DEFINITIONS[language],
+    filenames: FILENAMES[language],
     snippet: getSnippetSource(time, language),
   };
 }

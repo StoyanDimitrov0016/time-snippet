@@ -1,6 +1,15 @@
-import { Highlight, themes, type Language as PrismLanguage } from "prism-react-renderer";
+import {
+  Highlight,
+  themes,
+  type Language as PrismLanguage,
+} from "prism-react-renderer";
 import { useState } from "react";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { Button } from "../ui/button";
 import { Check, Copy } from "lucide-react";
 
@@ -54,7 +63,7 @@ export default function CodeBlock({ code, language }: CodeBlockProps) {
 
             {tokens.map((line, i) => (
               <div key={i} {...getLineProps({ line })}>
-                <span className="inline-block w-8 select-none text-gray-600 text-right mr-4">
+                <span className="hidden sm:inline-block select-non text-gray-600 text-right w-6 mr-2 sm:w-7 sm:mr-3 md:w-8 md:mr-4">
                   {i + 1}
                 </span>
                 {line.map((token, key) => (
