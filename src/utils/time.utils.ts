@@ -1,17 +1,13 @@
 import type { Time } from "./project.utils";
 
 function getISOWeek(date: Date) {
-  const dateUTC = new Date(
-    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
-  );
+  const dateUTC = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
   const day = dateUTC.getUTCDay() || 7;
 
   dateUTC.setUTCDate(dateUTC.getUTCDate() + 4 - day);
   const yearStart = new Date(Date.UTC(dateUTC.getUTCFullYear(), 0, 1));
 
-  return Math.ceil(
-    ((dateUTC.getTime() - yearStart.getTime()) / 86_400_000 + 1) / 7
-  );
+  return Math.ceil(((dateUTC.getTime() - yearStart.getTime()) / 86_400_000 + 1) / 7);
 }
 
 export function getTime(date: Date): Time {
@@ -24,9 +20,7 @@ export function getTime(date: Date): Time {
     week: getISOWeek(date),
     day: {
       num: date.getDate(),
-      name: new Intl.DateTimeFormat(undefined, { weekday: "long" }).format(
-        date
-      ),
+      name: new Intl.DateTimeFormat(undefined, { weekday: "long" }).format(date),
     },
     hour: date.getHours(),
     minute: date.getMinutes(),
