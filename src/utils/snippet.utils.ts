@@ -1,4 +1,5 @@
-import type { Language, Time } from "@/utils/project.utils";
+import type { Language } from "@/constants";
+import type { Time } from "@/utils/project.utils";
 import { IMPORTS } from "@/constants/imports.constants";
 
 export function getSnippetSource(time: Time, language: Language): string {
@@ -71,9 +72,7 @@ function makeSnippetBody(time: Time, language: Language): string {
     case "C++":
       return `Time time{
   .year = ${num(time.year)},
-  .month = Month{ .num = ${num(time.month.num)}, .name = ${str(
-        time.month.name
-      )} },
+  .month = Month{ .num = ${num(time.month.num)}, .name = ${str(time.month.name)} },
   .week = ${num(time.week)},
   .day = Day{ .num = ${num(time.day.num)}, .name = ${str(time.day.name)} },
   .hour = ${num(time.hour)},
@@ -97,5 +96,24 @@ function makeSnippetBody(time: Time, language: Language): string {
   Minute: ${num(time.minute)},
   Second: ${num(time.second)},
 }`;
+
+    case "Rust":
+      return `let time = Time {
+    year: ${num(time.year)},
+    month: Month {
+        num: ${num(time.month.num)},
+        name: ${str(time.month.name)}.to_string(),
+    },
+    week: ${num(time.week)},
+    day: Day {
+        num: ${num(time.day.num)},
+        name: ${str(time.day.name)}.to_string(),
+    },
+    hour: ${num(time.hour)},
+    minute: ${num(time.minute)},
+    second: ${num(time.second)},
+};`;
   }
+
+  throw new Error(`Unsupported language: ${language}`);
 }

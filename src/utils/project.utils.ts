@@ -1,8 +1,7 @@
 import { DEFINITIONS } from "@/constants/definitions.constants";
 import { getSnippetSource } from "./snippet.utils";
 import { FILENAMES } from "@/constants/filenames.constants";
-
-export type Language = "TypeScript" | "Python" | "Java" | "C#" | "C++" | "Go";
+import type { Language } from "@/constants";
 
 export type Time = {
   year: number;

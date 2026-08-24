@@ -10,9 +10,9 @@ Render the current time as a code snippet in different programming languages —
 
 - Shows a `now` object/map with:
   - `year`, `month` (`num`, `name`), `week`, `day` (`num`, `name`), `hour`, `minute`, `second`
-- Renders the same structure in multiple languages (TypeScript, Python, Java, C#, C++, Go)
+- Renders the same structure in multiple languages (TypeScript, Python, Java, C#, C++, Go, Rust)
 - Updates every second
-- Copy button inside the snippet for quick sharing
+- Copy the raw code directly from the snippet
 
 ---
 

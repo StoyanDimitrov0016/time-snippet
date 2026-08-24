@@ -1,6 +1,4 @@
-import type { Language as PrismLanguage } from "prism-react-renderer";
-
-export const LANGUAGES = ["TypeScript", "Python", "Java", "C#", "C++", "Go"] as const;
+export const LANGUAGES = ["TypeScript", "Python", "Rust", "Go", "Java", "C#", "C++"] as const;
 export type Language = (typeof LANGUAGES)[number];
 
 export type Now = {
@@ -15,11 +13,12 @@ export type Now = {
 
 export const DEFAULT_LANGUAGE: Language = "TypeScript";
 
-export const PRISM_LANGS_MAP = {
-  TypeScript: "ts",
+export const SHIKI_LANGS_MAP = {
+  TypeScript: "typescript",
   Python: "python",
   Java: "java",
   "C#": "csharp",
   "C++": "cpp",
   Go: "go",
-} as const satisfies Record<Language, PrismLanguage>;
+  Rust: "rust",
+} as const satisfies Record<Language, string>;

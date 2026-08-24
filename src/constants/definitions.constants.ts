@@ -1,4 +1,4 @@
-import type { Language } from "@/utils/project.utils";
+import type { Language } from "@/constants";
 
 const TYPESCRIPT_DEFINITION = `export type Month = {
   num: number;
@@ -126,6 +126,30 @@ type Time struct {
 }
 `;
 
+const RUST_DEFINITION = `#[derive(Debug)]
+pub struct Month {
+    pub num: u32,
+    pub name: String,
+}
+
+#[derive(Debug)]
+pub struct Day {
+    pub num: u32,
+    pub name: String,
+}
+
+#[derive(Debug)]
+pub struct Time {
+    pub year: i32,
+    pub month: Month,
+    pub week: u32,
+    pub day: Day,
+    pub hour: u32,
+    pub minute: u32,
+    pub second: u32,
+}
+`;
+
 export const DEFINITIONS: Record<Language, string> = {
   TypeScript: TYPESCRIPT_DEFINITION,
   Python: PYTHON_DEFINITION,
@@ -133,4 +157,5 @@ export const DEFINITIONS: Record<Language, string> = {
   "C#": C_SHARP_DEFINITION,
   "C++": C_PLUS_PLUS_DEFINITION,
   Go: GO_LANG_DEFINITION,
+  Rust: RUST_DEFINITION,
 } as const;

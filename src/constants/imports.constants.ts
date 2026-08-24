@@ -1,4 +1,4 @@
-import type { Language } from "@/utils/project.utils";
+import type { Language } from "@/constants";
 
 export const IMPORTS: Record<Language, string> = {
   TypeScript: `import type { Time } from "./types";`,
@@ -7,4 +7,5 @@ export const IMPORTS: Record<Language, string> = {
   "C#": ``,
   "C++": `#include "time.hpp"`,
   Go: `package main`,
+  Rust: `mod time;\nuse time::{Day, Month, Time};`,
 } as const;
