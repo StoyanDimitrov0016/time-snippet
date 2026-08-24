@@ -1,4 +1,5 @@
-import type { Language, ProjectFilenames } from "@/utils/project.utils";
+import type { Language } from "@/constants";
+import type { ProjectFilenames } from "@/utils/project.utils";
 
 const TYPESCRIPT_FILENAMES: ProjectFilenames = {
   snippet: "time-snippet.ts",
@@ -30,6 +31,11 @@ const GO_LANG_FILENAMES: ProjectFilenames = {
   definition: "time.go",
 } as const;
 
+const RUST_FILENAMES: ProjectFilenames = {
+  snippet: "main.rs",
+  definition: "time.rs",
+} as const;
+
 export const FILENAMES: Record<Language, ProjectFilenames> = {
   TypeScript: TYPESCRIPT_FILENAMES,
   Python: PYTHON_FILENAMES,
@@ -37,4 +43,5 @@ export const FILENAMES: Record<Language, ProjectFilenames> = {
   "C#": C_SHARP_FILENAMES,
   "C++": C_PLUS_PLUS_FILENAMES,
   Go: GO_LANG_FILENAMES,
+  Rust: RUST_FILENAMES,
 } as const;

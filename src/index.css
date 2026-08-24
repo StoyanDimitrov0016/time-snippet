@@ -116,6 +116,11 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply min-h-dvh bg-background text-foreground scheme-dark;
+    min-width: 320px;
+  }
+
+  #root {
+    @apply min-h-dvh;
   }
 }

@@ -8,8 +8,8 @@ export default function LanguageSelector() {
   const { language, setLanguage } = useLanguage();
 
   return (
-    <div className="flex flex-col gap-3">
-      <ButtonGroup className="inline-flex overflow-hidden rounded-lg border bg-muted p-1">
+    <div className="w-full overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <ButtonGroup className="mx-auto flex-nowrap gap-1 rounded-2xl border border-white/10 bg-white/5 p-1.5 shadow-lg shadow-black/10 backdrop-blur">
         {LANGUAGES.map((lang) => (
           <Button
             key={lang}
@@ -17,8 +17,8 @@ export default function LanguageSelector() {
             variant="ghost"
             size="sm"
             className={cn(
-              "rounded-md",
-              lang === language ? "bg-background shadow-sm" : "hover:bg-background/50"
+              "rounded-xl px-3 text-white/60 hover:bg-white/10 hover:text-white",
+              lang === language ? "bg-white/15 text-white shadow-sm" : "",
             )}
             onClick={() => setLanguage(lang)}
           >

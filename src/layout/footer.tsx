@@ -21,7 +21,7 @@ const contacts = [
 
 export default function Footer() {
   return (
-    <footer className="pt-10 text-center text-sm text-gray-500">
+    <footer className="shrink-0 pt-3 text-center text-xs text-white/45 sm:pt-5 sm:text-sm">
       <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
         {contacts.map(({ href, label, icon }) => (
           <a
@@ -29,7 +29,7 @@ export default function Footer() {
             href={href}
             target="_blank"
             rel="noreferrer"
-            className="hover:text-gray-900 inline-flex items-center gap-2"
+            className="inline-flex items-center gap-2 transition-colors hover:text-white"
           >
             <span className="text-base">{icon}</span>
             <span>{label}</span>
